@@ -5,6 +5,7 @@ on:
     branches:
       - arena/af6286dd-myverse
     paths:
+      - ".github/workflows/verify-experience.yml"
       - ".github/workflows/verify-experience.mjs"
       - "src/App.tsx"
       - "assets/experience/**"
