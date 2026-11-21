@@ -1,0 +1,43 @@
+name: verify-experience
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/af6286dd-myverse
+    paths:
+      - ".github/workflows/verify-experience.mjs"
+      - "src/App.tsx"
+      - "assets/experience/**"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/af6286dd-myverse
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci && npm run build
+      - run: npm i -D playwright@1.49.1 && npx playwright install --with-deps chromium
+      - name: Serve build
+        run: |
+          npx vite preview --host 127.0.0.1 --port 4173 &
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:4173/ >/dev/null && break
+            sleep 1
+          done
+      - name: Verify
+        env:
+          BASE_URL: http://127.0.0.1:4173
+        run: node .github/workflows/verify-experience.mjs
+      - name: Upload hasil verifikasi
+        uses: actions/upload-artifact@v4
+        with:
+          name: experience-verify
+          path: .recon/experience
+          if-no-files-found: error
