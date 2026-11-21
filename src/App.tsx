@@ -848,111 +848,125 @@ function ExperiencePage() {
 /* ---------------- Project ---------------- */
 type Project = {
   domain: string;
+  url: string;
   description: string;
   accent: string;
+  /** Tangkapan layar asli dari website project (lihat folder assets/projects). */
+  screenshot: string;
 };
 
-/* Pratinjau dibuat sebagai placeholder CSS murni – tidak bergantung pada file gambar. */
+/**
+ * Tangkapan layar asli tiap website project.
+ * Gambar disimpan di folder assets/projects dan ditampilkan lewat <img> nyata.
+ */
 const PROJECTS: Project[] = [
   {
     domain: "boosteryuk.com",
+    url: "https://boosteryuk.com",
     description: "Panel layanan SMM untuk pemesanan dan pemantauan order media sosial.",
     accent: "#38bdf8",
+    screenshot: "assets/projects/01-boosteryuk.jpg",
   },
   {
     domain: "job-gmail.vercel.app",
+    url: "https://job-gmail.vercel.app",
     description: "Aplikasi web pendukung pengelolaan lamaran kerja berbasis email.",
     accent: "#a78bfa",
+    screenshot: "assets/projects/02-job-gmail.jpg",
   },
   {
     domain: "bdpsukses.my.id",
+    url: "https://bdpsukses.my.id",
     description: "Situs profil layanan bisnis lengkap dengan ketentuan penggunaan.",
     accent: "#34d399",
+    screenshot: "assets/projects/03-bdps.jpg",
   },
   {
     domain: "jajosteak.vercel.app",
+    url: "https://jajosteak.vercel.app",
     description: "Situs kuliner untuk menampilkan menu steak dan informasi pemesanan.",
     accent: "#fb7185",
+    screenshot: "assets/projects/04-jajosteak.jpg",
   },
   {
     domain: "cekidku.my.id",
+    url: "https://cekidku.my.id",
     description: "Layanan web untuk pengecekan dan penelusuran data secara cepat.",
     accent: "#22d3ee",
+    screenshot: "assets/projects/05-cekidku.jpg",
   },
   {
     domain: "gemasstudio.vercel.app",
+    url: "https://gemasstudio.vercel.app",
     description: "Situs studio kreatif yang menampilkan layanan dan karya visual.",
     accent: "#f472b6",
+    screenshot: "assets/projects/06-gemasstudio.jpg",
   },
   {
     domain: "mr-toolbox.vercel.app",
+    url: "https://mr-toolbox.vercel.app",
     description: "Kumpulan peralatan web praktis dalam satu antarmuka sederhana.",
     accent: "#fbbf24",
+    screenshot: "assets/projects/07-mr-toolbox.jpg",
   },
   {
-    domain: "portofolio-me-neon-phl.vercel.app",
+    domain: "portofolio-me.vercel.app",
+    url: "https://portofolio-me.vercel.app",
     description: "Situs portofolio pribadi bertema neon.",
     accent: "#818cf8",
+    screenshot: "assets/projects/08-portofolio-me.jpg",
   },
   {
-    domain: "vtdown",
+    domain: "vtdownloader.vercel.app",
+    url: "https://vtdownloader.vercel.app",
     description: "Aplikasi pengunduh video dari tautan media sosial.",
     accent: "#2dd4bf",
+    screenshot: "assets/projects/09-vtdown.jpg",
   },
 ];
 
-/** Placeholder visual bergaya jendela browser, dibuat sepenuhnya dengan CSS. */
-function ProjectPreview({ domain, accent }: { domain: string; accent: string }) {
+/**
+ * Pratinjau project memakai tangkapan layar asli website.
+ * Gambar dimuat dari folder assets/projects lewat <img> sehingga browser
+ * menampilkan bitmap sungguhan, bukan placeholder CSS.
+ */
+function ProjectPreview({
+  domain,
+  url,
+  accent,
+  screenshot,
+}: {
+  domain: string;
+  url: string;
+  accent: string;
+  screenshot: string;
+}) {
   return (
-    <div
-      role="img"
-      aria-label={`Pratinjau placeholder untuk ${domain}`}
-      className="relative aspect-[8/5] w-full overflow-hidden border-b border-white/5"
-      style={{ background: `linear-gradient(135deg, ${accent}26 0%, #0b0b10 55%, #050507 100%)` }}
+    <a
+      href={url}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="group relative block aspect-[8/5] w-full overflow-hidden border-b border-white/5"
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-20"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.12) 1px, transparent 1px)",
-          backgroundSize: "26px 26px",
-        }}
+      <img
+        src={screenshot}
+        alt={`Tangkapan layar website ${domain}`}
+        loading="lazy"
+        decoding="async"
+        className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
+      />
+      <span
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/85 to-transparent opacity-0 transition group-hover:opacity-100"
         aria-hidden="true"
       />
-      <div
-        className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full blur-3xl"
-        style={{ background: `${accent}55` }}
+      <span
+        className="pointer-events-none absolute bottom-3 left-3 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] opacity-0 transition group-hover:opacity-100"
+        style={{ background: `${accent}26`, color: accent, boxShadow: `0 0 0 1px ${accent}55` }}
         aria-hidden="true"
-      />
-
-      <div className="relative flex h-full flex-col p-3.5 sm:p-4">
-        <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/45 px-2.5 py-1.5 backdrop-blur">
-          <span className="flex shrink-0 gap-1" aria-hidden="true">
-            <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-            <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
-            <span className="h-1.5 w-1.5 rounded-full bg-white/10" />
-          </span>
-          <span className="min-w-0 flex-1 truncate rounded bg-white/5 px-2 py-0.5 font-mono text-[9px] text-zinc-400">
-            {domain}
-          </span>
-        </div>
-
-        <div className="mt-4 flex-1">
-          <div className="h-1.5 w-16 rounded-full" style={{ background: accent }} />
-          <div className="mt-3 h-3 w-3/4 rounded bg-white/20" />
-          <div className="mt-2 h-2 w-2/3 rounded bg-white/10" />
-          <div className="mt-2 h-2 w-1/2 rounded bg-white/10" />
-          <div className="mt-4 flex gap-2" aria-hidden="true">
-            <div className="h-6 w-16 rounded-md" style={{ background: `${accent}cc` }} />
-            <div className="h-6 w-14 rounded-md border border-white/15" />
-          </div>
-        </div>
-
-        <span className="self-end rounded-full border border-white/10 bg-black/50 px-2 py-0.5 text-[9px] uppercase tracking-[0.16em] text-zinc-400">
-          Placeholder
-        </span>
-      </div>
-    </div>
+      >
+        Buka situs
+      </span>
+    </a>
   );
 }
 
@@ -974,7 +988,12 @@ function ProjectsPage() {
             key={project.domain}
             className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 transition hover:-translate-y-1 hover:border-white/25"
           >
-            <ProjectPreview domain={project.domain} accent={project.accent} />
+            <ProjectPreview
+              domain={project.domain}
+              url={project.url}
+              accent={project.accent}
+              screenshot={project.screenshot}
+            />
             <div className="p-5">
               <h3 className="break-all text-base font-semibold">{project.domain}</h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-400">{project.description}</p>

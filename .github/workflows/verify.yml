@@ -1,0 +1,45 @@
+name: verify
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/c4b58e4f-myverse
+    paths:
+      - ".github/workflows/verify.mjs"
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/c4b58e4f-myverse
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci && npm run build
+      - run: npm i -D playwright@1.49.1 && npx playwright install --with-deps chromium
+      - name: Serve build
+        run: |
+          npx vite preview --host 127.0.0.1 --port 4173 &
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:4173/ >/dev/null && break
+            sleep 1
+          done
+      - run: node .github/workflows/verify.mjs
+      - name: Commit
+        run: |
+          mkdir -p .recon/verify
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f .recon/verify
+          git commit -m "chore: verify project page [skip ci]" || echo "no changes"
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:arena/c4b58e4f-myverse && break
+            echo "push failed, retry $i"
+            git pull --rebase origin arena/c4b58e4f-myverse || true
+            sleep 5
+          done
