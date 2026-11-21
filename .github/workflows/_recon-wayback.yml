@@ -1,0 +1,52 @@
+name: recon-wayback
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/c4b58e4f-myverse
+    paths:
+      - ".github/workflows/_recon-wayback.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/c4b58e4f-myverse
+      - name: Wayback + archive search
+        run: |
+          cat > /tmp/p6.sh <<'EOS'
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36"
+          echo "===== CDX per-domain ====="
+          for u in vtdown.vercel.app portofolio-me-neon-phl.vercel.app vtdown.com vtdown.my.id vtdown.id portofolio-me-neon.com vtdown.app vtdown.io vtdown.net vtdown.co.id vtdown.web.id vtdown.web.app vtdown.pages.dev vtdown.netlify.app portofolio-me-neon.vercel.app portofolio-me-neon-phl.pages.dev portofolio-me-neon-phl.netlify.app portofolio-me-neon-phl.my.id portofolio-me-neon-phl.id vtdown-my.vercel.app vtdown-phi.vercel.app ; do
+            out=$(curl -s --max-time 20 "http://web.archive.org/cdx/search/cdx?url=$u&output=text&limit=6&fl=timestamp,original,statuscode" 2>/dev/null | head -n 6)
+            if [ -n "$(printf '%s' "$out" | tr -d '[:space:]')" ]; then
+              echo "CDX $u:"
+              printf '%s\n' "$out"
+            fi
+          done
+          echo "===== CDX domain-match (specific hosts) ====="
+          for u in vtdown.com vtdown.co.id vtdown.my.id vtdown.id; do
+            echo "-- $u --"
+            curl -s --max-time 25 "http://web.archive.org/cdx/search/cdx?url=$u&matchType=domain&output=text&limit=15&collapse=urlkey&fl=timestamp,original,statuscode" 2>/dev/null | head -n 15
+          done
+          echo "===== github user avatar check ====="
+          for u in guestiankai Dzbot01 agung1878; do
+            echo "-- $u --"
+            curl -s --max-time 15 -H "Accept: application/vnd.github+json" "https://api.github.com/users/$u" | head -c 400; echo
+          done
+          EOS
+          bash /tmp/p6.sh > /tmp/p6-out.txt 2>&1 || true
+      - name: Commit results
+        run: |
+          mkdir -p .recon
+          cp /tmp/p6-out.txt .recon/p6-out.txt || true
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .recon/p6-out.txt
+          git commit -m "chore: recon wayback [skip ci]" || echo "no changes"
+          git push origin HEAD:arena/c4b58e4f-myverse
