@@ -1,0 +1,46 @@
+name: recon-bucket
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/c4b58e4f-myverse
+    paths:
+      - ".github/workflows/_recon-bucket.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/c4b58e4f-myverse
+      - name: Bucket + full link dump
+        run: |
+          cat > /tmp/p9.sh <<'EOS'
+          K="sb_publishable_5rQxfGd82O_EooSxxBkcRw_S5ATDox0"
+          U="https://zcxtbtleeeaeqeryiwea.supabase.co"
+          echo "===== BUCKETS ====="
+          curl -s --max-time 30 "$U/storage/v1/bucket" -H "apikey: $K" -H "Authorization: Bearer $K" | head -c 3000
+          echo
+          echo "===== OBJECT LIST video ====="
+          curl -s --max-time 30 "$U/storage/v1/object/list/video" -H "apikey: $K" -H "Authorization: Bearer $K" | head -c 3000
+          echo
+          echo "===== ALL URLs in live myverse html ====="
+          curl -s -L --max-time 30 "https://myversedev.vercel.app" > /tmp/mv.html
+          grep -oE "https?://[A-Za-z0-9._~:/?#@!$&'()*+,;=%-]+" /tmp/mv.html | sed -e 's/[",;\\]*$//' | sort -u | head -n 120
+          echo "===== domains mentioned ====="
+          grep -oE "[a-z0-9][a-z0-9.-]*\.(com|app|id|io|net|org|my\.id|web\.id|sch\.id|co\.id|dev|xyz|site|me|cc|link|blog|top|live|fun|tools|space|online|shop|store|tech|pro)" /tmp/mv.html | sort -u | head -n 80
+          EOS
+          bash /tmp/p9.sh > /tmp/p9-out.txt 2>&1 || true
+      - name: Commit results
+        run: |
+          mkdir -p .recon
+          cp /tmp/p9-out.txt .recon/p9-out.txt || true
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .recon/p9-out.txt
+          git commit -m "chore: recon bucket [skip ci]" || echo "no changes"
+          git push origin HEAD:arena/c4b58e4f-myverse
