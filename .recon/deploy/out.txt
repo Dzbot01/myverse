@@ -1,4 +1,20 @@
 === https://myversedev-git-arena-c4b58e4f-myverse-dzs-projects-44164dee.vercel.app ===
-page http=200 bytes=334934
---- image refs found in deployed page ---
---- fetching each ---
+page http=200 bytes=334932
+--- markers ---
+title: <title>Login – Vercel</title>
+has assets/projects refs: 0
+has Placeholder text: 0
+has real img alt: 0
+domain labels present: 
+--- fetching each referenced image ---
+
+=== https://myversedev.vercel.app ===
+page http=200 bytes=546509
+--- markers ---
+title: <title>MyVerse</title>
+has assets/projects refs: 0
+has Placeholder text: 1
+has real img alt: 0
+domain labels present: portofolio-me-neon-phl vtdown 
+--- fetching each referenced image ---
+
