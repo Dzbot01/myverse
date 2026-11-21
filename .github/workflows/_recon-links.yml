@@ -1,0 +1,48 @@
+name: recon-links
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/c4b58e4f-myverse
+    paths:
+      - ".github/workflows/_recon-links.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/c4b58e4f-myverse
+      - name: Collect links + wayback
+        run: |
+          cat > /tmp/p3.sh <<'EOS'
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+          echo "===== myversedev HTML links ====="
+          curl -s -L --max-time 30 -A "$UA" https://myversedev.vercel.app > /tmp/mv.html
+          wc -c /tmp/mv.html
+          grep -oE "https?://[A-Za-z0-9._~:/?#@!$&'()*+,;=%-]+" /tmp/mv.html | sed -e 's/[",;]*$//' | sort -u | grep -viE "vercel\.app/_|w3\.org|schema|fonts\.|googleapis|gstatic|cdn|unpkg|jsdelivr" | head -n 60
+          echo
+          echo "===== myversedev Project section (text) ====="
+          sed -e 's/<[^>]*>/ /g' /tmp/mv.html | tr -s ' \n' ' \n' | grep -oiE "(vtdown|portofolio[a-z0-9.-]*|gemas[a-z0-9.-]*|mr-toolbox[a-z0-9.-]*|bdps[a-z0-9.-]*|jajosteak[a-z0-9.-]*|boosteryuk[a-z0-9.-]*|job-gmail[a-z0-9.-]*|cekidku[a-z0-9.-]*)" | sort -u
+          echo
+          echo "===== WAYBACK availability ====="
+          for u in vtdown.vercel.app portofolio-me-neon-phl.vercel.app vtdown.my.id vtdown.id vtdown.web.app vtdown.pages.dev vtdown.netlify.app vtdown.co.id vtdown.app vtdown.site vtdown.org vtdown.net vtdown.tech vtdown.xyz vtdown.link vtdown.click vtdown.cc vtdown.dev vtdown.io vtdown.me vtdown.live vtdown.fun vtdown.pro vtdown.vip vtdown.online vtdown.space vtdown.tools vtdown.blog vtdown.info vtdown.biz vtdown.today vtdown.cloud vtdown.run vtdown.page vtdown.sbs vtdown.one vtdown.town vtdown.in ; do
+            r=$(curl -s --max-time 12 "http://archive.org/wayback/available?url=$u")
+            s=$(printf '%s' "$r" | grep -o '"archived_snapshots"' >/dev/null && printf '%s' "$r" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{const j=JSON.parse(d);const s=j.archived_snapshots&&j.archived_snapshots.closest;console.log(s?s.timestamp+' | '+s.url:'none')}catch(e){console.log('parse-err')}})")
+            if [ "$s" != "none" ] && [ -n "$s" ]; then echo "WAYBACK $u -> $s"; fi
+          done
+          EOS
+          bash /tmp/p3.sh > /tmp/p3-out.txt 2>&1 || true
+      - name: Commit results
+        run: |
+          mkdir -p .recon
+          cp /tmp/p3-out.txt .recon/p3-out.txt || true
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .recon/p3-out.txt
+          git commit -m "chore: recon links [skip ci]" || echo "no changes"
+          git push origin HEAD:arena/c4b58e4f-myverse
