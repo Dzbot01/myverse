@@ -1,0 +1,35 @@
+===== TEAM-SCOPED ALIASES =====
+404 | https://vtdown-dzs-projects.vercel.app | 
+404 | https://vtdown-dzs-projects-44164dee.vercel.app | 
+404 | https://portofolio-me-neon-phl-dzs-projects.vercel.app | 
+404 | https://portofolio-me-neon-phl-dzs-projects-44164dee.vercel.app | 
+404 | https://portofolio-me-neon-dzs-projects.vercel.app | 
+404 | https://portofolio-me-neon-dzs-projects-44164dee.vercel.app | 
+404 | https://portofolio-me-dzs-projects.vercel.app | 
+200 | https://portofolio-me-dzs-projects-44164dee.vercel.app | Login – Vercel
+404 | https://vtdownloader-dzs-projects.vercel.app | 
+200 | https://vtdownloader-dzs-projects-44164dee.vercel.app | Login – Vercel
+404 | https://vtdownload-dzs-projects.vercel.app | 
+404 | https://vtdownload-dzs-projects-44164dee.vercel.app | 
+404 | https://mr-toolbox-dzs-projects.vercel.app | 
+200 | https://mr-toolbox-dzs-projects-44164dee.vercel.app | Login – Vercel
+===== web.id / my.id ===
+200 | https://portofolio.web.id | Jasa Website Portofolio Siswa | Mulai Rp 49rb
+000 | https://vtdown.web.id | 
+000 | https://portofolio-me-neon.web.id | 
+000 | https://portofolio-me-neon-phl.web.id | 
+000 | https://vtdown.my.id | 
+000 | https://portofolio.my.id | 
+000 | https://vtdown.id | 
+000 | https://portofolio-me-neon-phl.id | 
+000 | https://maxstore.my.id | 
+404 | https://dzbot01.github.io | Site not found &middot; GitHub Pages
+===== OWNERSHIP: portofolio.web.id =====
+https://linkedin.com/company
+https://twitter.com/portofoliowebid
+https://www.instagram.com/portofoliowebid
+<title data-i18n="home.meta.title">Jasa Website Portofolio Siswa | Mulai Rp 49rb</title>
+===== GH PAGES dzbot01 repos =====
+404 | https://dzbot01.github.io/vtdown/ | Site not found &middot; GitHub Pages
+404 | https://dzbot01.github.io/portofolio-me-neon-phl/ | Site not found &middot; GitHub Pages
+404 | https://dzbot01.github.io/portofolio-me-neon/ | Site not found &middot; GitHub Pages
