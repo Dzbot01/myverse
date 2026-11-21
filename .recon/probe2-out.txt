@@ -1,0 +1,32 @@
+===== WAYBACK portofolio-me-neon-phl.vercel.app =====
+{"url": "portofolio-me-neon-phl.vercel.app", "archived_snapshots": {}}
+===== WAYBACK CDX vtdown =====
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>403 Forbidden</title>
+<h1>Forbidden</h1>
+<p>This type of CDX query requires authorization.</p>
+
+===== HTML OWNERS =====
+----- https://vtdownloader.vercel.app -----
+VTDownloader - Premium Social Media Downloader
+
+----- https://vtdownload.vercel.app -----
+TikTok Downloader - No Watermark & MP3
+
+----- https://portofolio-me.vercel.app -----
+https://www.instagram.com/guestiankai
+https://www.linkedin.com/in
+Portofolioguestiankai
+
+----- https://portofolio-me.pages.dev -----
+Abdul Rahman Agung
+file_type_mysql
+file_type_hugo
+file_type_tailwind
+file_type_js_official
+file_type_mysql
+file_type_mysql
+
+----- https://vtdownloader.com -----
+Download TikTok Videos Without Watermark in HD Quality | VT Downloader
+
