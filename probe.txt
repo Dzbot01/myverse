@@ -1,4 +1,0 @@
-VERCEL_TOKEN set: no
-VERCEL_ORG_ID set: no
-VERCEL_PROJECT_ID set: no
-VERCEL_DEPLOY_HOOK set: no
