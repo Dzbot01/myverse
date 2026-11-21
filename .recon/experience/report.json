@@ -42,8 +42,8 @@
             "src": "assets/experience/01-lakuki-frozen.png",
             "top": 870,
             "left": 265,
-            "w": 128,
-            "h": 78,
+            "w": 112,
+            "h": 48,
             "nw": 700
           },
           {
@@ -51,8 +51,8 @@
             "src": "assets/experience/02-jnt-express.png",
             "top": 736,
             "left": 777,
-            "w": 128,
-            "h": 27,
+            "w": 112,
+            "h": 48,
             "nw": 900
           },
           {
@@ -60,8 +60,8 @@
             "src": "assets/experience/03-akasha-wira.png",
             "top": 606,
             "left": 265,
-            "w": 128,
-            "h": 37,
+            "w": 112,
+            "h": 48,
             "nw": 900
           },
           {
@@ -69,8 +69,8 @@
             "src": "assets/experience/04-jajo-steak.png",
             "top": 476,
             "left": 777,
-            "w": 128,
-            "h": 40,
+            "w": 112,
+            "h": 48,
             "nw": 380
           },
           {
@@ -78,8 +78,8 @@
             "src": "assets/experience/05-abra-brik.png",
             "top": 346,
             "left": 265,
-            "w": 128,
-            "h": 111,
+            "w": 112,
+            "h": 48,
             "nw": 800
           }
         ],
@@ -140,8 +140,8 @@
             "src": "assets/experience/01-lakuki-frozen.png",
             "top": 944,
             "left": 41,
-            "w": 128,
-            "h": 78,
+            "w": 112,
+            "h": 48,
             "nw": 700
           },
           {
@@ -149,8 +149,8 @@
             "src": "assets/experience/02-jnt-express.png",
             "top": 810,
             "left": 41,
-            "w": 128,
-            "h": 27,
+            "w": 112,
+            "h": 48,
             "nw": 900
           },
           {
@@ -158,8 +158,8 @@
             "src": "assets/experience/03-akasha-wira.png",
             "top": 675,
             "left": 41,
-            "w": 128,
-            "h": 37,
+            "w": 112,
+            "h": 48,
             "nw": 900
           },
           {
@@ -167,8 +167,8 @@
             "src": "assets/experience/04-jajo-steak.png",
             "top": 540,
             "left": 41,
-            "w": 128,
-            "h": 40,
+            "w": 112,
+            "h": 48,
             "nw": 380
           },
           {
@@ -176,8 +176,8 @@
             "src": "assets/experience/05-abra-brik.png",
             "top": 405,
             "left": 41,
-            "w": 128,
-            "h": 111,
+            "w": 112,
+            "h": 48,
             "nw": 800
           }
         ],
