@@ -864,7 +864,7 @@ function ExperienceCard({ node }: { node: ExperienceNode }) {
             alt={`Logo ${node.brand}`}
             loading="lazy"
             decoding="async"
-            className="absolute inset-2 object-contain"
+            className="absolute inset-2 h-[calc(100%_-_1rem)] w-[calc(100%_-_1rem)] object-contain"
           />
         </span>
         <div className="min-w-0">
