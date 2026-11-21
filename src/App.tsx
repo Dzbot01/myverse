@@ -858,13 +858,13 @@ function ExperienceCard({ node }: { node: ExperienceNode }) {
   return (
     <article className="group relative z-10 w-full max-w-md rounded-2xl border border-white/10 bg-zinc-950 p-4 transition duration-300 hover:-translate-y-1 hover:border-white/25">
       <div className="flex items-center gap-4">
-        <span className="grid h-16 w-32 shrink-0 place-items-center overflow-hidden rounded-xl bg-white p-2">
+        <span className="relative block h-16 w-32 shrink-0 overflow-hidden rounded-xl bg-white">
           <img
             src={node.logo}
             alt={`Logo ${node.brand}`}
             loading="lazy"
             decoding="async"
-            className="max-h-full max-w-full object-contain"
+            className="absolute inset-2 object-contain"
           />
         </span>
         <div className="min-w-0">
