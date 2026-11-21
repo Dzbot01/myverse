@@ -1,9 +1,11 @@
 /**
  * Ambil logo asli tiap tempat kerja untuk diagram Experience.
  *
- * Dijalankan di GitHub Actions (Chromium + internet penuh). Untuk tiap sumber,
- * script mengumpulkan kandidat logo (logo header, favicon, apple-touch-icon,
- * og:image), mengunduh yang terbaik, lalu menyimpan versinya sendiri.
+ * Dijalankan di GitHub Actions (Chromium + internet penuh). Untuk tiap sumber:
+ *   1. Kumpulkan kandidat logo (logo header, alt="logo", favicon, og:image).
+ *   2. Unduh kandidat terbaik, ATAU potong elemen logo langsung dari header
+ *      (logo banyak Site yang berupa inline SVG, bukan <img>).
+ * Semua temuan ditulis ke .recon/logos/report.json agar bisa diperiksa.
  */
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -19,10 +21,18 @@ const ENTITIES = [
     slug: "lakuki",
     sources: [
       "https://www.instagram.com/lakukifrozen/",
-      "https://www.youtube.com/@LakukiFrozen/shorts",
+      "https://www.youtube.com/@LakukiFrozen",
     ],
   },
-  { slug: "jnt", sources: ["https://www.jnt.co.id/", "https://www.jet.co.id/"] },
+  {
+    slug: "jnt",
+    sources: [
+      "https://www.jnt.co.id/",
+      "https://jnt.co.id/",
+      "https://www.jnt.co.id/id",
+      "https://www.jandexpress.id/",
+    ],
+  },
   { slug: "akasha", sources: ["https://akashainternational.com/"] },
   { slug: "jajosteak", sources: ["https://jajosteak.vercel.app/"] },
   { slug: "abra", sources: ["https://abrabriket.com/"] },
@@ -32,6 +42,7 @@ const browser = await chromium.launch({ args: ["--no-sandbox", "--disable-dev-sh
 await fs.mkdir(OUT, { recursive: true });
 
 const manifest = [];
+const report = [];
 
 /** Ubah URL gambar Next.js (_next/image?url=...) menjadi URL file aslinya. */
 function unwrapNextImage(raw) {
@@ -58,6 +69,7 @@ for (const entity of ENTITIES) {
   });
   const page = await context.newPage();
   let saved = false;
+  const notes = [];
 
   for (const source of entity.sources) {
     if (saved) break;
@@ -71,39 +83,21 @@ for (const entity of ENTITIES) {
           if (!src || !/^https?:|^data:/.test(src)) return;
           out.push({ src, kind, alt: alt || "", w: w || 0, h: h || 0 });
         };
-
-        // Logo di header/nav = kandidat terkuat (bukan foto produk).
         for (const img of document.querySelectorAll("header img, nav img, [class*='header'] img")) {
-          push(
-            img.currentSrc || img.src,
-            "header",
-            img.getAttribute("alt"),
-            img.naturalWidth,
-            img.naturalHeight,
-          );
+          push(img.currentSrc || img.src, "header", img.getAttribute("alt"), img.naturalWidth, img.naturalHeight);
         }
-        // Gambar dengan alt yang menyebut logo.
-        for (const img of document.querySelectorAll("img[alt*='logo' i], img[alt*='Logo']")) {
-          push(
-            img.currentSrc || img.src,
-            "alt-logo",
-            img.getAttribute("alt"),
-            img.naturalWidth,
-            img.naturalHeight,
-          );
+        for (const img of document.querySelectorAll("img[alt*='logo' i]")) {
+          push(img.currentSrc || img.src, "alt-logo", img.getAttribute("alt"), img.naturalWidth, img.naturalHeight);
         }
-        // Favicon & apple-touch-icon.
         for (const link of document.querySelectorAll("link[rel*='icon' i]")) {
           push(link.href, "icon", link.getAttribute("rel"));
         }
-        // og:image / twitter:image (biasanya logo untuk halaman profil).
         for (const meta of document.querySelectorAll("meta[property='og:image'], meta[name='twitter:image']")) {
           push(meta.content, "og", meta.getAttribute("property") || meta.getAttribute("name"));
         }
         return out;
       });
 
-      // Dedup + skoring.
       const seen = new Set();
       const scored = candidates
         .filter((c) => {
@@ -119,19 +113,14 @@ for (const entity of ENTITIES) {
           if (c.kind === "icon") score += 30;
           if (c.kind === "og") score += 20;
           if (/logo/i.test(c.alt)) score += 25;
-          // Foto produk/hero biasanya besar -> kurang cocok sebagai logo.
           if (c.w >= 600 && c.h >= 600) score -= 35;
           if (c.w && c.h && c.w <= 512 && c.h <= 512) score += 15;
           return { ...c, score };
         })
         .sort((a, b) => b.score - a.score);
 
-      console.log(`--- ${entity.slug} @ ${source} (${res?.status()}) ---`);
-      for (const c of scored.slice(0, 6)) {
-        console.log(`   [${c.score}] ${c.kind} ${c.w}x${c.h} ${c.alt} :: ${c.src.slice(0, 120)}`);
-      }
+      notes.push({ source, status: res?.status(), candidates: scored.slice(0, 8) });
 
-      // Unduh kandidat terbaik sampai berhasil.
       for (const c of scored) {
         if (c.score <= 0) break;
         try {
@@ -145,24 +134,48 @@ for (const entity of ENTITIES) {
           const ext = /svg/.test(type) ? "svg" : /png/.test(type) ? "png" : "jpg";
           const file = path.join(OUT, `${entity.slug}.${ext}`);
           await fs.writeFile(file, buf);
-          console.log(`SAVED ${entity.slug}.${ext} ${buf.length}B from ${c.kind} (${c.src.slice(0, 90)})`);
           manifest.push({ slug: entity.slug, file: `${entity.slug}.${ext}`, kind: c.kind, url, bytes: buf.length });
+          notes.push({ source, saved: `${entity.slug}.${ext}`, kind: c.kind, url });
           saved = true;
           break;
         } catch {
           /* coba kandidat berikutnya */
         }
       }
+
+      // Cadangan: potong elemen logo (SVG inline) langsung dari header.
+      if (!saved) {
+        const el = page
+          .locator(
+            'header a[href*="logo"], header svg, nav svg, header a:has(svg), [class*="logo"] svg, [class*="brand"] svg',
+          )
+          .first();
+        if ((await el.count()) && (await el.isVisible().catch(() => false))) {
+          const box = await el.boundingBox().catch(() => null);
+          if (box && box.width > 12 && box.width < 600) {
+            const file = path.join(OUT, `${entity.slug}.png`);
+            await el.screenshot({ path: file, omitBackground: true }).catch(() => {});
+            const { size } = await fs.stat(file).catch(() => ({ size: 0 }));
+            if (size > 800) {
+              manifest.push({ slug: entity.slug, file: `${entity.slug}.png`, kind: "element", bytes: size });
+              notes.push({ source, saved: `${entity.slug}.png`, kind: "element" });
+              saved = true;
+            }
+          }
+        }
+      }
     } catch (error) {
-      console.log(`FAIL ${entity.slug} @ ${source} -> ${error.message}`);
+      notes.push({ source, error: error.message });
     }
   }
 
-  if (!saved) console.log(`GIVEUP ${entity.slug}`);
+  if (!saved) manifest.push({ slug: entity.slug, failed: true });
+  report.push({ slug: entity.slug, notes });
   await page.close().catch(() => {});
   await context.close().catch(() => {});
 }
 
 await browser.close();
 await fs.writeFile(path.join(OUT, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+await fs.writeFile(path.join(OUT, "report.json"), JSON.stringify(report, null, 2) + "\n");
 console.log("DONE");
