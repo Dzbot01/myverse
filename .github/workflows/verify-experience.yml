@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - arena/af6286dd-myverse
+      - arena/11235259-myverse
     paths:
       - ".github/workflows/verify-experience.yml"
       - ".github/workflows/verify-experience.mjs"
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: arena/af6286dd-myverse
+          ref: arena/11235259-myverse
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -48,9 +48,9 @@ jobs:
           fi
           ok=0
           for i in 1 2 3 4 5; do
-            if git push origin HEAD:arena/af6286dd-myverse; then ok=1; break; fi
+            if git push origin HEAD:arena/11235259-myverse; then ok=1; break; fi
             echo "push failed, retry $i"
-            git fetch origin arena/af6286dd-myverse
+            git fetch origin arena/11235259-myverse
             git rebase FETCH_HEAD || true
             sleep 5
           done

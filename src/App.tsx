@@ -1070,20 +1070,6 @@ const PROJECTS: Project[] = [
     accent: "#fbbf24",
     screenshot: "assets/projects/07-mr-toolbox.jpg",
   },
-  {
-    domain: "portofolio-me.vercel.app",
-    url: "https://portofolio-me.vercel.app",
-    description: "Situs portofolio pribadi bertema neon.",
-    accent: "#818cf8",
-    screenshot: "assets/projects/08-portofolio-me.jpg",
-  },
-  {
-    domain: "vtdownloader.vercel.app",
-    url: "https://vtdownloader.vercel.app",
-    description: "Aplikasi pengunduh video dari tautan media sosial.",
-    accent: "#2dd4bf",
-    screenshot: "assets/projects/09-vtdown.jpg",
-  },
 ];
 
 /**
