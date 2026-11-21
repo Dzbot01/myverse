@@ -3,12 +3,15 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - arena/c4b58e4f-myverse
+      - arena/af6286dd-myverse
     paths:
+      - ".github/workflows/verify.yml"
       - ".github/workflows/verify.mjs"
+      - "src/App.tsx"
+      - "assets/projects/**"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   verify:
@@ -16,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: arena/c4b58e4f-myverse
+          ref: arena/af6286dd-myverse
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -30,16 +33,9 @@ jobs:
             sleep 1
           done
       - run: node .github/workflows/verify.mjs
-      - name: Commit
-        run: |
-          mkdir -p .recon/verify
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f .recon/verify
-          git commit -m "chore: verify project page [skip ci]" || echo "no changes"
-          for i in 1 2 3 4 5; do
-            git push origin HEAD:arena/c4b58e4f-myverse && break
-            echo "push failed, retry $i"
-            git pull --rebase origin arena/c4b58e4f-myverse || true
-            sleep 5
-          done
+      - name: Upload hasil verifikasi
+        uses: actions/upload-artifact@v4
+        with:
+          name: project-verify
+          path: .recon/verify
+          if-no-files-found: error
