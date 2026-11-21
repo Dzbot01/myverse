@@ -1,0 +1,31 @@
+name: compare
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/c4b58e4f-myverse
+    paths:
+      - ".github/workflows/compare.mjs"
+
+permissions:
+  contents: write
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/c4b58e4f-myverse
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i -D playwright@1.49.1 && npx playwright install --with-deps chromium
+      - run: node .github/workflows/compare.mjs
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f .recon/compare
+          git commit -m "chore: compare captures [skip ci]" || echo "no changes"
+          git push origin HEAD:arena/c4b58e4f-myverse
