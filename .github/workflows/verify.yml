@@ -11,7 +11,7 @@ on:
       - "assets/projects/**"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   verify:
@@ -33,9 +33,22 @@ jobs:
             sleep 1
           done
       - run: node .github/workflows/verify.mjs
-      - name: Upload hasil verifikasi
-        uses: actions/upload-artifact@v4
-        with:
-          name: project-verify
-          path: .recon/verify
-          if-no-files-found: error
+      - name: Commit hasil verifikasi
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f .recon/verify
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+          else
+            git commit -m "chore: verify project page [skip ci]"
+          fi
+          ok=0
+          for i in 1 2 3 4 5; do
+            if git push origin HEAD:arena/11235259-myverse; then ok=1; break; fi
+            echo "push failed, retry $i"
+            git fetch origin arena/11235259-myverse
+            git rebase FETCH_HEAD || true
+            sleep 5
+          done
+          test "$ok" = "1"
