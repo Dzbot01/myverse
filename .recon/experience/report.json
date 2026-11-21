@@ -12,27 +12,27 @@
       "cards": [
         {
           "text": "Lulus",
-          "top": 1064
+          "top": 1092
         },
         {
           "text": "Toko Frozen Food",
-          "top": 861
+          "top": 858
         },
         {
           "text": "Gudang JNT",
-          "top": 740
+          "top": 732
         },
         {
           "text": "PT AKHASA WIRA INTERNATIONAL",
-          "top": 599
+          "top": 602
         },
         {
           "text": "Jajo Steak",
-          "top": 478
+          "top": 472
         },
         {
           "text": "PT ABRA BIONERGI NUSANTARA",
-          "top": 338
+          "top": 342
         }
       ],
       "diagram": {
@@ -40,50 +40,50 @@
           {
             "alt": "Logo Lakuki Frozen",
             "src": "assets/experience/01-lakuki-frozen.png",
-            "top": 875,
-            "left": 327,
-            "w": 84,
-            "h": 84,
+            "top": 870,
+            "left": 265,
+            "w": 112,
+            "h": 68,
             "nw": 700
           },
           {
             "alt": "Logo J&T Express",
             "src": "assets/experience/02-jnt-express.png",
-            "top": 745,
-            "left": 775,
-            "w": 84,
-            "h": 44,
+            "top": 748,
+            "left": 777,
+            "w": 112,
+            "h": 24,
             "nw": 900
           },
           {
             "alt": "Logo Akasha International",
             "src": "assets/experience/03-akasha-wira.png",
-            "top": 614,
-            "left": 327,
-            "w": 84,
-            "h": 44,
+            "top": 613,
+            "left": 265,
+            "w": 112,
+            "h": 33,
             "nw": 900
           },
           {
             "alt": "Logo Jajo Steak",
             "src": "assets/experience/04-jajo-steak.png",
-            "top": 483,
-            "left": 775,
-            "w": 84,
-            "h": 84,
-            "nw": 400
+            "top": 482,
+            "left": 777,
+            "w": 112,
+            "h": 35,
+            "nw": 380
           },
           {
             "alt": "Logo ABRA BRIK",
             "src": "assets/experience/05-abra-brik.png",
-            "top": 352,
-            "left": 327,
-            "w": 84,
-            "h": 73,
+            "top": 346,
+            "left": 265,
+            "w": 112,
+            "h": 97,
             "nw": 800
           }
         ],
-        "rootTop": 1064,
+        "rootTop": 1092,
         "rootDate": true,
         "bodyHas": {
           "lakuki": true,
@@ -110,23 +110,23 @@
       "cards": [
         {
           "text": "Lulus",
-          "top": 1119
+          "top": 1167
         },
         {
           "text": "Toko Frozen Food",
-          "top": 916
+          "top": 932
         },
         {
           "text": "Gudang JNT",
-          "top": 795
+          "top": 807
         },
         {
           "text": "PT AKHASA WIRA INTERNATIONAL",
-          "top": 654
+          "top": 662
         },
         {
           "text": "Jajo Steak",
-          "top": 533
+          "top": 537
         },
         {
           "text": "PT ABRA BIONERGI NUSANTARA",
@@ -138,50 +138,50 @@
           {
             "alt": "Logo Lakuki Frozen",
             "src": "assets/experience/01-lakuki-frozen.png",
-            "top": 930,
-            "left": 39,
-            "w": 84,
-            "h": 84,
+            "top": 944,
+            "left": 41,
+            "w": 112,
+            "h": 68,
             "nw": 700
           },
           {
             "alt": "Logo J&T Express",
             "src": "assets/experience/02-jnt-express.png",
-            "top": 800,
-            "left": 39,
-            "w": 84,
-            "h": 44,
+            "top": 822,
+            "left": 41,
+            "w": 112,
+            "h": 24,
             "nw": 900
           },
           {
             "alt": "Logo Akasha International",
             "src": "assets/experience/03-akasha-wira.png",
-            "top": 669,
-            "left": 39,
-            "w": 84,
-            "h": 44,
+            "top": 683,
+            "left": 41,
+            "w": 112,
+            "h": 33,
             "nw": 900
           },
           {
             "alt": "Logo Jajo Steak",
             "src": "assets/experience/04-jajo-steak.png",
-            "top": 538,
-            "left": 39,
-            "w": 84,
-            "h": 84,
-            "nw": 400
+            "top": 547,
+            "left": 41,
+            "w": 112,
+            "h": 35,
+            "nw": 380
           },
           {
             "alt": "Logo ABRA BRIK",
             "src": "assets/experience/05-abra-brik.png",
-            "top": 407,
-            "left": 39,
-            "w": 84,
-            "h": 73,
+            "top": 405,
+            "left": 41,
+            "w": 112,
+            "h": 97,
             "nw": 800
           }
         ],
-        "rootTop": 1119,
+        "rootTop": 1167,
         "rootDate": true,
         "bodyHas": {
           "lakuki": true,
