@@ -856,15 +856,15 @@ const EXPERIENCE_PATH: ExperienceNode[] = [
 /** Kartu satu tempat kerja: logo sebagai gambar utama + nama + peran. */
 function ExperienceCard({ node }: { node: ExperienceNode }) {
   return (
-    <article className="group w-full max-w-sm rounded-2xl border border-white/10 bg-zinc-950 p-4 transition duration-300 hover:-translate-y-1 hover:border-white/25">
+    <article className="group relative z-10 w-full max-w-md rounded-2xl border border-white/10 bg-zinc-950 p-4 transition duration-300 hover:-translate-y-1 hover:border-white/25">
       <div className="flex items-center gap-4">
-        <span className="grid h-14 w-24 shrink-0 place-items-center overflow-hidden rounded-xl bg-white p-1.5">
+        <span className="grid h-16 w-32 shrink-0 place-items-center overflow-hidden rounded-xl bg-white p-2">
           <img
             src={node.logo}
             alt={`Logo ${node.brand}`}
             loading="lazy"
             decoding="async"
-            className="h-full w-full object-contain"
+            className="max-h-full max-w-full object-contain"
           />
         </span>
         <div className="min-w-0">
@@ -957,16 +957,15 @@ function ExperiencePage() {
         </p>
       </div>
 
-      <div className="relative mx-auto w-full max-w-5xl">
-        {/* Batang utama diagram, membentang dari akar di bawah ke puncak */}
-        <span
-          className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-px -translate-x-1/2 bg-gradient-to-t from-cyan-400/60 via-white/10 to-violet-400/40 md:block"
-          aria-hidden="true"
-        />
-
+      <div className="mx-auto w-full max-w-5xl">
         <div className="flex flex-col-reverse gap-8">
-          {/* Akar diagram: wisuda */}
-          <div className="flex flex-col items-center">
+          {/* Akar diagram: wisuda, berada di paling bawah */}
+          <div className="relative z-10 flex flex-col items-center">
+            {/* Penghubung dari kartu akar ke batang utama */}
+            <span
+              className="h-8 w-px bg-gradient-to-b from-white/10 to-cyan-400/60"
+              aria-hidden="true"
+            />
             <div className="w-full max-w-sm rounded-2xl border border-cyan-400/25 bg-zinc-950 p-5 text-center shadow-[0_0_60px_-20px_rgba(34,211,238,0.55)]">
               <span className="mx-auto grid h-12 w-12 place-items-center rounded-full border border-cyan-300/40 bg-cyan-400/10 text-cyan-300">
                 <Icon d={ICONS.cap} className="h-6 w-6" />
@@ -980,19 +979,27 @@ function ExperiencePage() {
             </span>
           </div>
 
-          {/* Ranting: setiap tempat kerja, urut dari bawah ke atas */}
-          <div className="flex flex-col-reverse gap-8">
-            {EXPERIENCE_PATH.map((node, index) => (
-              <ExperienceLevel
-                key={node.workplace}
-                node={node}
-                side={index % 2 === 0 ? "left" : "right"}
-              />
-            ))}
-            <p className="text-center text-[11px] uppercase tracking-[0.18em] text-zinc-600">
-              Awal perjalanan
-            </p>
+          {/* Batang utama + ranting, membentang ke atas */}
+          <div className="relative">
+            <span
+              className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-px -translate-x-1/2 bg-gradient-to-t from-cyan-400/60 via-white/10 to-violet-400/40 md:block"
+              aria-hidden="true"
+            />
+            <div className="flex flex-col-reverse gap-8">
+              {EXPERIENCE_PATH.map((node, index) => (
+                <ExperienceLevel
+                  key={node.workplace}
+                  node={node}
+                  side={index % 2 === 0 ? "left" : "right"}
+                />
+              ))}
+            </div>
           </div>
+
+          {/* Puncak diagram */}
+          <p className="text-center text-[11px] uppercase tracking-[0.18em] text-zinc-600">
+            Awal perjalanan
+          </p>
         </div>
       </div>
     </section>
