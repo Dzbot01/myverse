@@ -1,13 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import TechText from "./components/TechText";
 import DriftWall, { type DriftWallItem } from "./components/DriftWall";
-import shotBoosteryuk from "./assets/projects/boosteryuk.jpg";
-import shotJobGmail from "./assets/projects/job-gmail.jpg";
-import shotBdpsukses from "./assets/projects/bdpsukses.jpg";
-import shotJajosteak from "./assets/projects/jajosteak.jpg";
-import shotCekidku from "./assets/projects/cekidku.jpg";
-import shotGemasstudio from "./assets/projects/gemasstudio.jpg";
-import shotMrToolbox from "./assets/projects/mr-toolbox.jpg";
 import {
   FALLBACK_VIDEO_URL,
   fetchVideos,
@@ -856,54 +849,112 @@ function ExperiencePage() {
 type Project = {
   domain: string;
   description: string;
-  image?: string;
+  accent: string;
 };
 
+/* Pratinjau dibuat sebagai placeholder CSS murni – tidak bergantung pada file gambar. */
 const PROJECTS: Project[] = [
   {
     domain: "boosteryuk.com",
     description: "Panel layanan SMM untuk pemesanan dan pemantauan order media sosial.",
-    image: shotBoosteryuk,
+    accent: "#38bdf8",
   },
   {
     domain: "job-gmail.vercel.app",
     description: "Aplikasi web pendukung pengelolaan lamaran kerja berbasis email.",
-    image: shotJobGmail,
+    accent: "#a78bfa",
   },
   {
     domain: "bdpsukses.my.id",
     description: "Situs profil layanan bisnis lengkap dengan ketentuan penggunaan.",
-    image: shotBdpsukses,
+    accent: "#34d399",
   },
   {
     domain: "jajosteak.vercel.app",
     description: "Situs kuliner untuk menampilkan menu steak dan informasi pemesanan.",
-    image: shotJajosteak,
+    accent: "#fb7185",
   },
   {
     domain: "cekidku.my.id",
     description: "Layanan web untuk pengecekan dan penelusuran data secara cepat.",
-    image: shotCekidku,
+    accent: "#22d3ee",
   },
   {
     domain: "gemasstudio.vercel.app",
     description: "Situs studio kreatif yang menampilkan layanan dan karya visual.",
-    image: shotGemasstudio,
+    accent: "#f472b6",
   },
   {
     domain: "mr-toolbox.vercel.app",
     description: "Kumpulan peralatan web praktis dalam satu antarmuka sederhana.",
-    image: shotMrToolbox,
+    accent: "#fbbf24",
   },
   {
     domain: "portofolio-me-neon-phl.vercel.app",
     description: "Situs portofolio pribadi bertema neon.",
+    accent: "#818cf8",
   },
   {
     domain: "vtdown",
     description: "Aplikasi pengunduh video dari tautan media sosial.",
+    accent: "#2dd4bf",
   },
 ];
+
+/** Placeholder visual bergaya jendela browser, dibuat sepenuhnya dengan CSS. */
+function ProjectPreview({ domain, accent }: { domain: string; accent: string }) {
+  return (
+    <div
+      role="img"
+      aria-label={`Pratinjau placeholder untuk ${domain}`}
+      className="relative aspect-[8/5] w-full overflow-hidden border-b border-white/5"
+      style={{ background: `linear-gradient(135deg, ${accent}26 0%, #0b0b10 55%, #050507 100%)` }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 opacity-20"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.12) 1px, transparent 1px)",
+          backgroundSize: "26px 26px",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full blur-3xl"
+        style={{ background: `${accent}55` }}
+        aria-hidden="true"
+      />
+
+      <div className="relative flex h-full flex-col p-3.5 sm:p-4">
+        <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/45 px-2.5 py-1.5 backdrop-blur">
+          <span className="flex shrink-0 gap-1" aria-hidden="true">
+            <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
+            <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+            <span className="h-1.5 w-1.5 rounded-full bg-white/10" />
+          </span>
+          <span className="min-w-0 flex-1 truncate rounded bg-white/5 px-2 py-0.5 font-mono text-[9px] text-zinc-400">
+            {domain}
+          </span>
+        </div>
+
+        <div className="mt-4 flex-1">
+          <div className="h-1.5 w-16 rounded-full" style={{ background: accent }} />
+          <div className="mt-3 h-3 w-3/4 rounded bg-white/20" />
+          <div className="mt-2 h-2 w-2/3 rounded bg-white/10" />
+          <div className="mt-2 h-2 w-1/2 rounded bg-white/10" />
+          <div className="mt-4 flex gap-2" aria-hidden="true">
+            <div className="h-6 w-16 rounded-md" style={{ background: `${accent}cc` }} />
+            <div className="h-6 w-14 rounded-md border border-white/15" />
+          </div>
+        </div>
+
+        <span className="self-end rounded-full border border-white/10 bg-black/50 px-2 py-0.5 text-[9px] uppercase tracking-[0.16em] text-zinc-400">
+          Placeholder
+        </span>
+      </div>
+    </div>
+  );
+}
 
 function ProjectsPage() {
   return (
@@ -923,20 +974,7 @@ function ProjectsPage() {
             key={project.domain}
             className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 transition hover:-translate-y-1 hover:border-white/25"
           >
-            {project.image ? (
-              <img
-                src={project.image}
-                alt={`Tampilan situs ${project.domain}`}
-                className="aspect-[8/5] w-full object-cover object-top"
-                loading="lazy"
-              />
-            ) : (
-              <div className="grid aspect-[8/5] w-full place-items-center bg-gradient-to-br from-zinc-900 to-black">
-                <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-zinc-500">
-                  Pratinjau belum tersedia
-                </span>
-              </div>
-            )}
+            <ProjectPreview domain={project.domain} accent={project.accent} />
             <div className="p-5">
               <h3 className="break-all text-base font-semibold">{project.domain}</h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-400">{project.description}</p>
