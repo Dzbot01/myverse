@@ -1,0 +1,57 @@
+===== NON-200 CANDIDATES =====
+200 | https://vtdownloader.com | Download TikTok Videos Without Watermark in HD Quality | VT Downloader
+200 | https://vtdownloader.vercel.app | VTDownloader - Premium Social Media Downloader
+200 | https://vtdownloader.now.sh | VTDownloader - Premium Social Media Downloader
+200 | https://vtdownload.vercel.app | TikTok Downloader - No Watermark & MP3
+200 | https://vtdownload.now.sh | TikTok Downloader - No Watermark & MP3
+200 | https://vt-downloader.vercel.app | Tiktok Downloader
+200 | https://vt-downloader.now.sh | Tiktok Downloader
+200 | https://portofolio-me.netlify.app | Document
+200 | https://portofolio-me.pages.dev | Abdul Rahman Agung
+file_type_mysql
+file_type_hugo
+file_type_tailwind
+f
+200 | https://portofolio-me.vercel.app | Portofolioguestiankai
+200 | https://portofolio-me.now.sh | Portofolioguestiankai
+200 | https://web2app.com | Sell Outside the App Store | Take Payments Outside App Store | Paddle
+200 | https://web2app.netlify.app | 
+200 | https://web2app.pages.dev | 网页应用
+200 | https://web2app.web.app | 
+200 | https://bot-tele.vercel.app | API.Nha.PRO
+200 | https://bot-tele.now.sh | API.Nha.PRO
+200 | https://hitori.com | 
+200 | https://hitori.netlify.app | Apex App : Home
+200 | https://hitori.pages.dev | Speedtest by Ookla - The Global Broadband Speed Test
+403 | https://max-store.com | Just a moment...
+200 | https://max-store.netlify.app | Max Store
+200 | https://maxstore.my.id | Sewa TMail — maxstore.my.id
+403 | https://maxstore.id | Attention Required! | Cloudflare
+200 | https://maxstore.web.id | Digital Store — Layanan Digital & Auto Order 24 Jam
+200 | https://maxstore.netlify.app | NTN Boilerplate
+200 | https://maxstore.pages.dev | SanMart — Shop smart, pay on delivery
+'+y(n.text)+"
+===== CRTSH =====
+-- vtdown --
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+-- portofolio-me-neon-phl --
+[]
+-- portofolio-me-neon --
+[]
+-- dzbot01 --
+[]
+===== WAYBACK .my.id candidates =====
+vtdown.my.id -> {"url": "vtdown.my.id", "archived_snapshots": {}}
+portofolio-me-neon-phl.my.id -> {"url": "portofolio-me-neon-phl.my.id", "archived_snapshots": {}}
+temadz.my.id -> {"url": "temadz.my.id", "archived_snapshots": {}}
+web2app.my.id -> {"url": "web2app.my.id", "archived_snapshots": {}}
+bot-tele.my.id -> {"url": "bot-tele.my.id", "archived_snapshots": {}}
+hitori.my.id -> {"url": "hitori.my.id", "archived_snapshots": {"closest": {"status": "200", "available": true, "url": "http://web.archive.org/web/20240810042230/https://hitori.my.id/", "timestamp": "20240810042230"}}}
+max-store.my.id -> {"url": "max-store.my.id", "archived_snapshots": {}}
