@@ -1,0 +1,19 @@
+page status: 200
+bytes: 553054
+logo refs: 5
+assets/experience/01-lakuki-frozen.png -> 200 image/png 144065B
+assets/experience/02-jnt-express.png -> 200 image/png 15992B
+assets/experience/03-akasha-wira.png -> 200 image/png 31058B
+assets/experience/04-jajo-steak.png -> 200 image/png 16418B
+assets/experience/05-abra-brik.png -> 200 image/png 104964B
+picsum present: true
+text "Lakuki Store 2": true
+text "Tim Gudang": true
+text "Gudang JNT": true
+text "PT AKHASA WIRA INTERNATIONAL": true
+text "Loader (muat barang)": true
+text "Jajo Steak": true
+text "Crew Store": true
+text "PT ABRA BIONERGI NUSANTARA": true
+text "Operator Produksi Briket": true
+text "25 Mei 2026": true
