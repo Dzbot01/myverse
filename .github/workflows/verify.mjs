@@ -51,6 +51,12 @@ console.log(
 );
 console.log("problems:", problems);
 
+const allDecoded = imgs.length > 0 && imgs.every((i) => i.complete && i.naturalW > 0 && i.naturalH > 0);
+await fs.writeFile(
+  path.join(OUT, "verify-report.json"),
+  JSON.stringify({ count: imgs.length, allDecoded, problems, images: imgs }, null, 2) + "\n",
+);
+
 await page.screenshot({ path: path.join(OUT, "project-page.png"), fullPage: true });
 await browser.close();
 console.log("DONE");
