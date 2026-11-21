@@ -66,6 +66,12 @@ for (const ref of expRefs) {
   const buf = Buffer.from(await r.arrayBuffer());
   lines.push(`  ${ref} -> ${r.status} ${r.headers.get("content-type")} ${buf.length}B`);
 }
+// Buka menu lagi (drawer tertutup setelah memilih Project).
+const menu2 = page.getByRole("button", { name: /buka menu/i }).first();
+if (await menu2.count()) {
+  await menu2.click();
+  await page.waitForTimeout(600);
+}
 await page.getByRole("button", { name: /^experience$/i }).first().click();
 await page.waitForTimeout(1500);
 await page.screenshot({ path: `${OUT}/live-experience.png`, fullPage: true });
