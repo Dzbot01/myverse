@@ -11,7 +11,7 @@ on:
       - "assets/experience/**"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   verify:
@@ -36,9 +36,22 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:4173
         run: node .github/workflows/verify-experience.mjs
-      - name: Upload hasil verifikasi
-        uses: actions/upload-artifact@v4
-        with:
-          name: experience-verify
-          path: .recon/experience
-          if-no-files-found: error
+      - name: Commit hasil verifikasi
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f .recon/experience
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+          else
+            git commit -m "chore: verify experience [skip ci]"
+          fi
+          ok=0
+          for i in 1 2 3 4 5; do
+            if git push origin HEAD:arena/af6286dd-myverse; then ok=1; break; fi
+            echo "push failed, retry $i"
+            git fetch origin arena/af6286dd-myverse
+            git rebase FETCH_HEAD || true
+            sleep 5
+          done
+          test "$ok" = "1"
