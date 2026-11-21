@@ -1,0 +1,54 @@
+name: workers
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/c4b58e4f-myverse
+    paths:
+      - ".github/workflows/_workers.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  workers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/c4b58e4f-myverse
+      - name: Probe workers.dev subdomains
+        run: |
+          cat > /tmp/w.sh <<'EOS'
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36"
+          echo "===== workers.dev project sweep (boosteryukid) ====="
+          for p in vtdown vtdownloader vtdownload vt vt-downloader portofolio portofolio-me portofolio-neon \
+            portofolio-me-neon-phl neon-phl phl media snapgram snapgram-io boosteryuk cekidku \
+            jajosteak job-gmail mr-toolbox gemasstudio bdps api resend auth app web app-api \
+            portfolio portfolio-neon myverse myversedev; do
+            h="$p.boosteryukid.workers.dev"
+            code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 8 -A "$UA" "https://$h/")
+            if [ "$code" != "000" ] && [ "$code" != "404" ]; then echo "HIT $code https://$h/"; fi
+          done
+          echo "===== DNS check ====="
+          for p in vtdown vtdownloader portofolio portofolio-me portofolio-me-neon-phl; do
+            echo -n "$p.boosteryukid.workers.dev -> "
+            getent hosts "$p.boosteryukid.workers.dev" | head -n1 || echo "NXDOMAIN"
+          done
+          echo "===== other cloudflare-ish subdomains ====="
+          for u in boosteryukid.pages.dev boosteryukid.workers.dev dzbot01.pages.dev dzbot01.workers.dev \
+            myverse.pages.dev myverse.workers.dev; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 8 -A "$UA" "https://$u/")
+            echo "$code https://$u/"
+          done
+          EOS
+          bash /tmp/w.sh > /tmp/w-out.txt 2>&1 || true
+      - name: Commit
+        run: |
+          mkdir -p .recon
+          cp /tmp/w-out.txt .recon/w-out.txt || true
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .recon/w-out.txt
+          git commit -m "chore: workers recon [skip ci]" || echo "no changes"
+          git push origin HEAD:arena/c4b58e4f-myverse
