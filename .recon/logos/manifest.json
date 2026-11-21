@@ -2,9 +2,13 @@
   {
     "slug": "lakuki",
     "file": "lakuki.jpg",
-    "kind": "header",
-    "url": "https://yt3.googleusercontent.com/jp0YMJOLE_K36BmGbJHEN-5jOZDs2y_oTb0lErzH2FkbY3b30krpQ0ftSGF9nSBHCeQ455728is=s160-c-k-c0x00ffffff-no-rj",
-    "bytes": 5538
+    "kind": "icon",
+    "url": "https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp",
+    "bytes": 900
+  },
+  {
+    "slug": "jnt",
+    "failed": true
   },
   {
     "slug": "akasha",
@@ -12,6 +16,12 @@
     "kind": "header",
     "url": "https://akashainternational.com/media/shared/logo-white.png",
     "bytes": 68528
+  },
+  {
+    "slug": "jajosteak",
+    "file": "jajosteak.png",
+    "kind": "element",
+    "bytes": 3639
   },
   {
     "slug": "abra",

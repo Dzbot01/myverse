@@ -1,0 +1,241 @@
+[
+  {
+    "slug": "lakuki",
+    "notes": [
+      {
+        "source": "https://www.instagram.com/lakukifrozen/",
+        "status": 200,
+        "candidates": [
+          {
+            "src": "https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp",
+            "kind": "icon",
+            "alt": "icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://static.cdninstagram.com/rsrc.php/yj/r/f01UdNyJjJj.webp",
+            "kind": "icon",
+            "alt": "apple-touch-icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://static.cdninstagram.com/rsrc.php/yL/r/mMvhX4currF.webp",
+            "kind": "icon",
+            "alt": "apple-touch-icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://static.cdninstagram.com/rsrc.php/yY/r/5OCV_xUyQ5h.webp",
+            "kind": "icon",
+            "alt": "apple-touch-icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://static.cdninstagram.com/rsrc.php/y9/r/MptwNl-B2pS.webp",
+            "kind": "icon",
+            "alt": "apple-touch-icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://static.cdninstagram.com/rsrc.php/yw/r/icwX0xAk0pz.webp",
+            "kind": "icon",
+            "alt": "apple-touch-icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://static.cdninstagram.com/rsrc.php/y4/r/QaBlI0OZiks.ico",
+            "kind": "icon",
+            "alt": "shortcut icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://static.cdninstagram.com/rsrc.php/v4/yD/r/R0fBIMurK8v.png",
+            "kind": "og",
+            "alt": "og:image",
+            "w": 0,
+            "h": 0,
+            "score": 20
+          }
+        ]
+      },
+      {
+        "source": "https://www.instagram.com/lakukifrozen/",
+        "saved": "lakuki.jpg",
+        "kind": "icon",
+        "url": "https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp"
+      }
+    ]
+  },
+  {
+    "slug": "jnt",
+    "notes": [
+      {
+        "source": "https://www.jnt.co.id/",
+        "error": "page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://www.jnt.co.id/\nCall log:\n  - navigating to \"https://www.jnt.co.id/\", waiting until \"domcontentloaded\"\n"
+      },
+      {
+        "source": "https://jnt.co.id/",
+        "error": "page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://jnt.co.id/\nCall log:\n  - navigating to \"https://jnt.co.id/\", waiting until \"domcontentloaded\"\n"
+      },
+      {
+        "source": "https://www.jnt.co.id/id",
+        "error": "page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://www.jnt.co.id/id\nCall log:\n  - navigating to \"https://www.jnt.co.id/id\", waiting until \"domcontentloaded\"\n"
+      },
+      {
+        "source": "https://www.jandexpress.id/",
+        "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.jandexpress.id/\nCall log:\n  - navigating to \"https://www.jandexpress.id/\", waiting until \"domcontentloaded\"\n"
+      }
+    ]
+  },
+  {
+    "slug": "akasha",
+    "notes": [
+      {
+        "source": "https://akashainternational.com/",
+        "status": 200,
+        "candidates": [
+          {
+            "src": "https://akashainternational.com/_next/image?url=%2Fmedia%2Fshared%2Flogo-white.png&w=256&q=75",
+            "kind": "header",
+            "alt": "Akasha",
+            "w": 256,
+            "h": 113,
+            "score": 65
+          },
+          {
+            "src": "https://akashainternational.com/icon.png?c0154cdcdb13b2d3",
+            "kind": "icon",
+            "alt": "icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://akashainternational.com/apple-icon.png?966ee0e8d3bad947",
+            "kind": "icon",
+            "alt": "apple-touch-icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://akashainternational.com/media/shared/og.jpg",
+            "kind": "og",
+            "alt": "og:image",
+            "w": 0,
+            "h": 0,
+            "score": 20
+          }
+        ]
+      },
+      {
+        "source": "https://akashainternational.com/",
+        "saved": "akasha.png",
+        "kind": "header",
+        "url": "https://akashainternational.com/media/shared/logo-white.png"
+      }
+    ]
+  },
+  {
+    "slug": "jajosteak",
+    "notes": [
+      {
+        "source": "https://jajosteak.vercel.app/",
+        "status": 200,
+        "candidates": []
+      },
+      {
+        "source": "https://jajosteak.vercel.app/",
+        "saved": "jajosteak.png",
+        "kind": "element"
+      }
+    ]
+  },
+  {
+    "slug": "abra",
+    "notes": [
+      {
+        "source": "https://abrabriket.com/",
+        "status": 200,
+        "candidates": [
+          {
+            "src": "https://abrabriket.com/_next/image?url=%2Fimages%2Flogo-abra-mark-nav-2.png&w=64&q=75",
+            "kind": "header",
+            "alt": "ABRA BRIK logo",
+            "w": 64,
+            "h": 55,
+            "score": 90
+          },
+          {
+            "src": "https://abrabriket.com/favicon.ico",
+            "kind": "icon",
+            "alt": "shortcut icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://abrabriket.com/icons/icon-16.png",
+            "kind": "icon",
+            "alt": "icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://abrabriket.com/icons/icon-32.png",
+            "kind": "icon",
+            "alt": "icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://abrabriket.com/icons/icon-192.png",
+            "kind": "icon",
+            "alt": "icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://abrabriket.com/apple-touch-icon.png",
+            "kind": "icon",
+            "alt": "apple-touch-icon",
+            "w": 0,
+            "h": 0,
+            "score": 30
+          },
+          {
+            "src": "https://abrabriket.com/wp-content/uploads/og-hero.jpg",
+            "kind": "og",
+            "alt": "og:image",
+            "w": 0,
+            "h": 0,
+            "score": 20
+          }
+        ]
+      },
+      {
+        "source": "https://abrabriket.com/",
+        "saved": "abra.png",
+        "kind": "header",
+        "url": "https://abrabriket.com/images/logo-abra-mark-nav-2.png"
+      }
+    ]
+  }
+]
