@@ -1,11 +1,14 @@
 /**
  * Ambil logo asli tiap tempat kerja untuk diagram Experience.
  *
- * Dijalankan di GitHub Actions (Chromium + internet penuh). Untuk tiap sumber:
- *   1. Kumpulkan kandidat logo (logo header, alt="logo", favicon, og:image).
- *   2. Unduh kandidat terbaik, ATAU potong elemen logo langsung dari header
- *      (logo banyak Site yang berupa inline SVG, bukan <img>).
- * Semua temuan ditulis ke .recon/logos/report.json agar bisa diperiksa.
+ * Dipakai lewat workflow capture-logos.yml. Script ini mencoba beberapa sumber
+ * untuk tiap entitas, lalu menyimpan kandidat logo terbaik ke .recon/logos/.
+ *
+ * Sumber yang dipakai:
+ *   - header/nav <img> dan elemen dengan alt berisi "logo"
+ *   - favicon / apple-touch-icon
+ *   - og:image / twitter:image
+ *   - fallback: potong elemen logo (SVG inline) langsung dari halaman
  */
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -26,12 +29,7 @@ const ENTITIES = [
   },
   {
     slug: "jnt",
-    sources: [
-      "https://www.jnt.co.id/",
-      "https://jnt.co.id/",
-      "https://www.jnt.co.id/id",
-      "https://www.jandexpress.id/",
-    ],
+    sources: ["https://www.jet.co.id/", "https://www.jnt.co.id/"],
   },
   { slug: "akasha", sources: ["https://akashainternational.com/"] },
   { slug: "jajosteak", sources: ["https://jajosteak.vercel.app/"] },
@@ -66,6 +64,7 @@ for (const entity of ENTITIES) {
     viewport: { width: 1440, height: 900 },
     userAgent: UA,
     locale: "id-ID",
+    ignoreHTTPSErrors: true,
   });
   const page = await context.newPage();
   let saved = false;
@@ -80,8 +79,7 @@ for (const entity of ENTITIES) {
       const candidates = await page.evaluate(() => {
         const out = [];
         const push = (src, kind, alt, w, h) => {
-          if (!src || !/^https?:|^data:/.test(src)) return;
-          out.push({ src, kind, alt: alt || "", w: w || 0, h: h || 0 });
+          if (src && /^(https?:|data:)/.test(src)) out.push({ src, kind, alt: alt || "", w: w || 0, h: h || 0 });
         };
         for (const img of document.querySelectorAll("header img, nav img, [class*='header'] img")) {
           push(img.currentSrc || img.src, "header", img.getAttribute("alt"), img.naturalWidth, img.naturalHeight);
@@ -113,6 +111,7 @@ for (const entity of ENTITIES) {
           if (c.kind === "icon") score += 30;
           if (c.kind === "og") score += 20;
           if (/logo/i.test(c.alt)) score += 25;
+          // Foto produk/hero biasanya besar -> kurang cocok sebagai logo.
           if (c.w >= 600 && c.h >= 600) score -= 35;
           if (c.w && c.h && c.w <= 512 && c.h <= 512) score += 15;
           return { ...c, score };
@@ -125,13 +124,13 @@ for (const entity of ENTITIES) {
         if (c.score <= 0) break;
         try {
           const url = unwrapNextImage(c.src);
-          const resp = await page.request.get(url, { timeout: 30000 });
+          const resp = await context.request.get(url, { timeout: 30000, ignoreHTTPSErrors: true });
           if (!resp.ok()) continue;
           const buf = await resp.body();
           if (buf.length < 800) continue;
           const type = resp.headers()["content-type"] || "";
           if (!/image/.test(type)) continue;
-          const ext = /svg/.test(type) ? "svg" : /png/.test(type) ? "png" : "jpg";
+          const ext = /svg/.test(type) ? "svg" : /png/.test(type) ? "png" : /webp/.test(type) ? "webp" : "jpg";
           const file = path.join(OUT, `${entity.slug}.${ext}`);
           await fs.writeFile(file, buf);
           manifest.push({ slug: entity.slug, file: `${entity.slug}.${ext}`, kind: c.kind, url, bytes: buf.length });
@@ -165,7 +164,7 @@ for (const entity of ENTITIES) {
         }
       }
     } catch (error) {
-      notes.push({ source, error: error.message });
+      notes.push({ source, error: error.message.slice(0, 200) });
     }
   }
 

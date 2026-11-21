@@ -34,6 +34,7 @@ const ICONS = {
   pin: "M12 21s7-5.1 7-12A7 7 0 1 0 5 9c0 6.9 7 12 7 12zm0-9a3 3 0 1 1 0-6 3 3 0 0 1 0 6z",
   calendar: "M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z",
   arrow: "M5 12h14M13 6l6 6-6 6",
+  cap: "M12 4 2 9l10 5 10-5-10-5zM6 11.2V16c0 1.9 2.7 3.5 6 3.5s6-1.6 6-3.5v-4.8M22 9v5",
 };
 
 const MENUS: { id: Tab; label: string; icon: string }[] = [
@@ -800,47 +801,200 @@ function PortfolioPage() {
 }
 
 /* ---------------- Experience ---------------- */
+/** Satu node pada diagram bercabang: tempat kerja beserta perannya. */
+type ExperienceNode = {
+  /** Nama tempat kerja. */
+  workplace: string;
+  /** Nama unit atau cabang (bila ada). */
+  unit?: string;
+  /** Peran yang dijalankan. */
+  role: string;
+  /** Nama merek untuk teks alternatif logo. */
+  brand: string;
+  /** Logo (gambar kartu) dari folder assets/experience. */
+  logo: string;
+};
+
+/**
+ * Jalur karier, diurutkan dari yang paling dekat dengan wisuda.
+ * Diagram digambar dari bawah ke atas, jadi node pertama tampil paling bawah.
+ */
+const EXPERIENCE_PATH: ExperienceNode[] = [
+  {
+    workplace: "Toko Frozen Food",
+    unit: "Lakuki Store 2",
+    role: "Tim Gudang",
+    brand: "Lakuki Frozen",
+    logo: "assets/experience/01-lakuki-frozen.png",
+  },
+  {
+    workplace: "Gudang JNT",
+    role: "DW",
+    brand: "J&T Express",
+    logo: "assets/experience/02-jnt-express.png",
+  },
+  {
+    workplace: "PT AKHASA WIRA INTERNATIONAL",
+    role: "Loader (muat barang)",
+    brand: "Akasha International",
+    logo: "assets/experience/03-akasha-wira.png",
+  },
+  {
+    workplace: "Jajo Steak",
+    role: "Crew Store",
+    brand: "Jajo Steak",
+    logo: "assets/experience/04-jajo-steak.png",
+  },
+  {
+    workplace: "PT ABRA BIONERGI NUSANTARA",
+    role: "Operator Produksi Briket",
+    brand: "ABRA BRIK",
+    logo: "assets/experience/05-abra-brik.png",
+  },
+];
+
+/** Kartu satu tempat kerja: logo sebagai gambar utama + nama + peran. */
+function ExperienceCard({ node }: { node: ExperienceNode }) {
+  return (
+    <article className="group w-full max-w-sm rounded-2xl border border-white/10 bg-zinc-950 p-4 transition duration-300 hover:-translate-y-1 hover:border-white/25">
+      <div className="flex items-center gap-4">
+        <span className="grid h-14 w-24 shrink-0 place-items-center overflow-hidden rounded-xl bg-white p-1.5">
+          <img
+            src={node.logo}
+            alt={`Logo ${node.brand}`}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-contain"
+          />
+        </span>
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold leading-snug text-zinc-50">{node.workplace}</h3>
+          {node.unit ? <p className="mt-0.5 text-xs text-zinc-400">{node.unit}</p> : null}
+          <span className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-2.5 py-1 text-[11px] font-medium text-cyan-300">
+            <Icon d={ICONS.briefcase} className="h-3.5 w-3.5" />
+            {node.role}
+          </span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/**
+ * Satu level diagram: kartu di kiri atau kanan batang vertikal,
+ * dihubungkan oleh ranting horizontal dan titik pertemuan.
+ */
+function ExperienceLevel({
+  node,
+  side,
+}: {
+  node: ExperienceNode;
+  side: "left" | "right";
+}) {
+  const isLeft = side === "left";
+  return (
+    <div className="grid grid-cols-1 items-center md:grid-cols-[1fr_4rem_1fr]">
+      {/* Slot kiri */}
+      <div
+        className={`relative flex ${
+          isLeft ? "justify-center md:justify-end" : "hidden md:flex md:justify-start"
+        }`}
+      >
+        {isLeft ? (
+          <>
+            <span className="absolute -top-8 left-1/2 h-8 w-px -translate-x-1/2 bg-white/15 md:hidden" />
+            <ExperienceCard node={node} />
+          </>
+        ) : null}
+      </div>
+
+      {/* Batang vertikal + ranting */}
+      <div className="relative hidden self-stretch md:flex md:justify-center">
+        <span
+          className={`absolute top-1/2 h-px -translate-y-1/2 bg-white/25 ${
+            isLeft ? "left-0 right-1/2" : "left-1/2 right-0"
+          }`}
+          aria-hidden="true"
+        />
+        <span
+          className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/70 bg-zinc-950"
+          aria-hidden="true"
+        />
+      </div>
+
+      {/* Slot kanan */}
+      <div
+        className={`relative flex ${
+          isLeft ? "hidden md:flex md:justify-end" : "justify-center md:justify-start"
+        }`}
+      >
+        {isLeft ? null : (
+          <>
+            <ExperienceCard node={node} />
+            <span className="absolute -top-8 left-1/2 h-8 w-px -translate-x-1/2 bg-white/15 md:hidden" />
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Halaman Experience: diagram bercabang yang tumbuh dari bawah ke atas.
+ * Akar diagram (wisuda) berada di paling bawah, lalu:ranting naik ke atas.
+ */
 function ExperiencePage() {
   return (
     <section className="py-2">
       <div className="mb-6 max-w-2xl">
         <p className="text-xs uppercase tracking-[0.2em] text-cyan-400">Experience</p>
-        <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Merancang pengalaman digital.</h2>
+        <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+          Perjalanan karier dari titik awal.
+        </h2>
         <p className="mt-3 text-sm leading-relaxed text-zinc-400 sm:text-base">
-          Pengalaman membangun produk web dari eksplorasi antarmuka sampai integrasi data yang siap
-          digunakan.
+          Diagram ini tumbuh dari bawah ke atas. Wisuda pada 25 Mei 2026 menjadi titik awal, lalu
+          setiap pengalaman kerja membuka ranting baru menuju karier saat ini.
         </p>
       </div>
 
-      <article className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-950">
-        <img
-          src="https://picsum.photos/id/251/1400/820"
-          alt="Ruang kerja kreatif untuk pengembangan produk digital"
-          className="aspect-[16/8] w-full object-cover"
-          loading="lazy"
+      <div className="relative mx-auto w-full max-w-5xl">
+        {/* Batang utama diagram, membentang dari akar di bawah ke puncak */}
+        <span
+          className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-px -translate-x-1/2 bg-gradient-to-t from-cyan-400/60 via-white/10 to-violet-400/40 md:block"
+          aria-hidden="true"
         />
-        <div className="grid gap-6 p-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:p-8">
-          <div>
-            <p className="text-sm text-cyan-300">2023 — Sekarang</p>
-            <h3 className="mt-2 text-2xl font-semibold">Frontend Developer · MyVerse Studio</h3>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400 sm:text-base">
-              Mengembangkan pengalaman web yang responsif dengan React, TypeScript, Tailwind CSS,
-              dan Supabase. Fokus pekerjaan mencakup sistem desain, visual interaktif, optimasi
-              performa, serta alur data yang mudah dipelihara.
+
+        <div className="flex flex-col-reverse gap-8">
+          {/* Akar diagram: wisuda */}
+          <div className="flex flex-col items-center">
+            <div className="w-full max-w-sm rounded-2xl border border-cyan-400/25 bg-zinc-950 p-5 text-center shadow-[0_0_60px_-20px_rgba(34,211,238,0.55)]">
+              <span className="mx-auto grid h-12 w-12 place-items-center rounded-full border border-cyan-300/40 bg-cyan-400/10 text-cyan-300">
+                <Icon d={ICONS.cap} className="h-6 w-6" />
+              </span>
+              <h3 className="mt-3 text-base font-semibold text-zinc-50">Lulus</h3>
+              <p className="mt-1 text-sm font-medium text-cyan-300">25 Mei 2026</p>
+              <p className="mt-1 text-xs text-zinc-500">Lulusan baru, titik awal perjalanan</p>
+            </div>
+            <span className="mt-3 text-[11px] uppercase tracking-[0.18em] text-zinc-600">
+              Titik awal
+            </span>
+          </div>
+
+          {/* Ranting: setiap tempat kerja, urut dari bawah ke atas */}
+          <div className="flex flex-col-reverse gap-8">
+            {EXPERIENCE_PATH.map((node, index) => (
+              <ExperienceLevel
+                key={node.workplace}
+                node={node}
+                side={index % 2 === 0 ? "left" : "right"}
+              />
+            ))}
+            <p className="text-center text-[11px] uppercase tracking-[0.18em] text-zinc-600">
+              Awal perjalanan
             </p>
           </div>
-          <dl className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm sm:block sm:space-y-4">
-            <div>
-              <dt className="text-zinc-500">Lokasi</dt>
-              <dd className="mt-1 text-zinc-200">Jakarta, Indonesia</dd>
-            </div>
-            <div>
-              <dt className="text-zinc-500">Fokus</dt>
-              <dd className="mt-1 text-zinc-200">Product &amp; Creative UI</dd>
-            </div>
-          </dl>
         </div>
-      </article>
+      </div>
     </section>
   );
 }
