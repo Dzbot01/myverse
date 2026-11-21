@@ -1,0 +1,24 @@
+### VT CANDIDATES
+HIT 200 https://vtdownloader.vercel.app | VTDownloader - Premium Social Media Downloader | 
+HIT 200 https://vtdownloader.com | Download TikTok Videos Without Watermark in HD Quality | VT Downloader | 
+HIT 200 https://vtdownload.vercel.app | TikTok Downloader - No Watermark & MP3 | 
+HIT 200 https://vt-downloader.vercel.app | Tiktok Downloader | 
+HIT 200 https://vtdl.netlify.app | Todo list | 
+HIT 200 https://vtdl.com | Domain Details Page | 
+### PORTOFOLIO CANDIDATES
+HIT 200 https://portofolio-me.vercel.app | Portofolioguestiankai | 
+HIT 200 https://portofolio-me.netlify.app | Document | 
+HIT 200 https://portofolio-me.pages.dev | Abdul Rahman Agung
+file_type_mysql
+file_type_hugo
+file_type_tailwind
+file_type_j | 
+### LIVE SITE CONTEXT
+domain:"mr-toolbox.vercel.app",description:"Kumpulan peralatan web praktis dalam satu antarmuka sederhana.",accent:"#fbbf24"},{domain:"portofolio-me-neon-phl.vercel.app",description:"Situs portofolio pribadi bertema neon.",accent:"#818cf8"},{domain:"vtdown",description:"Aplikasi pengunduh video dari tautan media sosial.",accent:"#2dd4bf"}];function Lx({domain:i,accent:n}){return v.jsxs("div",{role:"img","aria-label":`Pratinjau placeholder untuk ${i}`,className:"relative aspect-[8/5] w-full overflow-hi
+---
+tudio.vercel.app",description:"Situs studio kreatif yang menampilkan layanan dan karya visual.",accent:"#f472b6"},{domain:"mr-toolbox.vercel.app",description:"Kumpulan peralatan web praktis dalam satu antarmuka sederhana.",accent:"#fbbf24"},{domain:"portofolio-me-neon-phl.vercel.app",description:"Situs portofolio pribadi bertema neon.",accent:"#818cf8"},{domain:"vtdown",description:"Aplikasi pengunduh video dari tautan media sosial.",accent:"#2dd4bf"}];function Lx({domain:i,accent:n}){return v.jsxs("div",{role:"img",
+### DDG SEARCH
+-- vtdown+Dzbot01 --
+-- %22portofolio-me-neon-phl%22 --
+-- Dzbot01+vercel+projects --
+-- site%3Agithub.com+Dzbot01+vtdown --
