@@ -1,9 +1,12 @@
+import fs from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
 
 const OUT = path.resolve(".recon/verify");
 const UA =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
+
+await fs.mkdir(OUT, { recursive: true });
 
 const browser = await chromium.launch({ args: ["--no-sandbox", "--disable-dev-shm-usage"] });
 const context = await browser.newContext({
@@ -12,19 +15,20 @@ const context = await browser.newContext({
 });
 const page = await context.newPage();
 
-const failed = [];
-page.on("requestfailed", (r) => failed.push(r.url()));
+const problems = [];
+page.on("requestfailed", (r) => problems.push(`REQFAIL ${r.url()}`));
 page.on("response", (r) => {
-  if (r.status() >= 400) failed.push(`${r.status()} ${r.url()}`);
+  if (r.status() >= 400) problems.push(`${r.status()} ${r.url()}`);
 });
 
 await page.goto("http://127.0.0.1:4173/", { waitUntil: "networkidle", timeout: 60000 });
-await page.waitForTimeout(2500);
+await page.waitForTimeout(2000);
 
-// Buka tab Project di navigasi.
-const tab = page.getByText("Project", { exact: false }).first();
-await tab.click({ timeout: 10000 }).catch(() => {});
-await page.waitForTimeout(2500);
+// Navigasi ada di drawer "Menu" -> buka dulu, lalu pilih Project.
+await page.getByRole("button", { name: /Buka menu/i }).click({ timeout: 10000 });
+await page.waitForTimeout(900);
+await page.getByRole("button", { name: "Project", exact: true }).click({ timeout: 10000 });
+await page.waitForTimeout(3000);
 
 const imgs = await page.evaluate(() =>
   [...document.querySelectorAll("img")]
@@ -37,12 +41,15 @@ const imgs = await page.evaluate(() =>
       alt: i.getAttribute("alt"),
     })),
 );
+
 console.log("project images rendered:", JSON.stringify(imgs, null, 2));
 console.log(
-  "all decoded:",
+  "count:",
+  imgs.length,
+  "| all decoded:",
   imgs.length > 0 && imgs.every((i) => i.complete && i.naturalW > 0 && i.naturalH > 0),
 );
-console.log("failed requests:", failed);
+console.log("problems:", problems);
 
 await page.screenshot({ path: path.join(OUT, "project-page.png"), fullPage: true });
 await browser.close();
