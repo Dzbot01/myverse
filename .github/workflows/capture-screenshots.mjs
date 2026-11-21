@@ -28,8 +28,6 @@ const TARGETS = [
   { file: "05-cekidku.jpg", url: "https://cekidku.my.id" },
   { file: "06-gemasstudio.jpg", url: "https://gemasstudio.vercel.app" },
   { file: "07-mr-toolbox.jpg", url: "https://mr-toolbox.vercel.app" },
-  { file: "08-portofolio-me.jpg", url: "https://portofolio-me.vercel.app", click: "Dark Mode" },
-  { file: "09-vtdown.jpg", url: "https://vtdownloader.vercel.app" },
 ];
 
 /** Selector tombol penutup overlay (cookie/terms/pengumuman) bila muncul. */
