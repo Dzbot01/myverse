@@ -57,6 +57,27 @@ lines.push(`live cards (${live.cards.length}): ${JSON.stringify(live.cards)}`);
 lines.push(`live images ok: ${live.images.every((i) => i.ok)} (${live.images.length} gambar)`);
 lines.push(`live teks portofolio-me: ${live.bodyHas.portofolioMe}`);
 lines.push(`live teks vtdownloader: ${live.bodyHas.vtdownloader}`);
+
+// Halaman Experience: pastikan diagram + logo ikut ter-deploy.
+const expRefs = [...new Set(html.match(/assets\/experience\/[a-z0-9.-]+/g) || [])].sort();
+lines.push(`experience logo refs: ${expRefs.length}`);
+for (const ref of expRefs) {
+  const r = await fetch(`${BASE}/${ref}`, { headers: { "user-agent": "Mozilla/5.0" } });
+  const buf = Buffer.from(await r.arrayBuffer());
+  lines.push(`  ${ref} -> ${r.status} ${r.headers.get("content-type")} ${buf.length}B`);
+}
+await page.getByRole("button", { name: /^experience$/i }).first().click();
+await page.waitForTimeout(1500);
+await page.screenshot({ path: `${OUT}/live-experience.png`, fullPage: true });
+const expLive = await page.evaluate(() => ({
+  logos: [...document.querySelectorAll('img[alt*="Logo" i]')].map((i) => ({
+    alt: i.getAttribute("alt"),
+    ok: i.complete && i.naturalWidth > 0,
+  })),
+  root: document.body.innerText.includes("25 Mei 2026"),
+}));
+lines.push(`live logo experience: ${JSON.stringify(expLive.logos)}`);
+lines.push(`live teks "25 Mei 2026": ${expLive.root}`);
 await browser.close();
 
 await fs.writeFile(`${OUT}/prod.txt`, lines.join("\n") + "\n");
