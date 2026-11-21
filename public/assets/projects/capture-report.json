@@ -1,0 +1,65 @@
+[
+  {
+    "slug": "boosteryuk",
+    "url": "https://boosteryuk.com",
+    "status": 200,
+    "title": "Boosteryuk — SMM Panel Indonesia & Jasa Booster Media Sosial",
+    "via": "chromium"
+  },
+  {
+    "slug": "job-gmail",
+    "url": "https://job-gmail.vercel.app",
+    "status": 200,
+    "title": "Pusat Gmail - Layanan Terpercaya",
+    "via": "chromium"
+  },
+  {
+    "slug": "bdpsukses",
+    "url": "https://bdpsukses.my.id",
+    "status": 200,
+    "title": "BDP 2023-2026 Community || The End Version",
+    "via": "chromium"
+  },
+  {
+    "slug": "jajosteak",
+    "url": "https://jajosteak.vercel.app",
+    "status": 200,
+    "title": "Jajo Steak — Bakar Sampai Berkesan",
+    "via": "chromium"
+  },
+  {
+    "slug": "cekidku",
+    "url": "https://cekidku.my.id/",
+    "status": 200,
+    "title": "Boosteryuk — Cek Status Pesanan",
+    "via": "chromium"
+  },
+  {
+    "slug": "gemasstudio",
+    "url": "https://gemasstudio.vercel.app",
+    "status": 200,
+    "title": "gemasSTUDIO — Coco Inventory & R&D Lab",
+    "via": "chromium"
+  },
+  {
+    "slug": "mr-toolbox",
+    "url": "https://mr-toolbox.vercel.app",
+    "status": 200,
+    "title": "Mr ToolBox — All-in-One Toolkit",
+    "via": "chromium"
+  },
+  {
+    "slug": "portofolio-me-neon-phl",
+    "url": "https://portofolio-me-neon-phl.vercel.app",
+    "status": 0,
+    "title": "",
+    "via": "microlink"
+  },
+  {
+    "slug": "vtdown",
+    "url": "https://vtdown.vercel.app",
+    "status": 0,
+    "title": "",
+    "via": "microlink"
+  }
+]
