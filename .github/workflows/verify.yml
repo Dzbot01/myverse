@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - ${{ github.ref_name }}
+      - arena/11235259-myverse
     paths:
       - ".github/workflows/verify.yml"
       - ".github/workflows/verify.mjs"
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: arena/11235259-myverse
       - uses: actions/setup-node@v4
         with:
           node-version: 22
