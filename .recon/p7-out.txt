@@ -1,6 +1,0 @@
-===== Video table =====
-[]
-===== storage bucket list video =====
-{"statusCode":"404","error":"Bucket not found","message":"Bucket not found","code":"NoSuchBucket"}
-===== openapi tables =====
-{"message":"Secret API key required","hint":"Only secret API keys can be used for this endpoint."}

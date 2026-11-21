@@ -890,7 +890,7 @@ const PROJECTS: Project[] = [
   },
   {
     domain: "cekidku.my.id",
-    url: "https://cekidku.my.id/",
+    url: "https://cekidku.my.id",
     description: "Layanan web untuk pengecekan dan penelusuran data secara cepat.",
     accent: "#22d3ee",
     screenshot: "assets/projects/05-cekidku.jpg",
@@ -910,21 +910,20 @@ const PROJECTS: Project[] = [
     screenshot: "assets/projects/07-mr-toolbox.jpg",
   },
   {
-    domain: "portofolio-me-neon-phl.vercel.app",
+    domain: "portofolio-me.vercel.app",
     url: "https://portofolio-me.vercel.app",
     description: "Situs portofolio pribadi bertema neon.",
     accent: "#818cf8",
     screenshot: "assets/projects/08-portofolio-me.jpg",
   },
   {
-    domain: "vtdown",
+    domain: "vtdownloader.vercel.app",
     url: "https://vtdownloader.vercel.app",
     description: "Aplikasi pengunduh video dari tautan media sosial.",
     accent: "#2dd4bf",
     screenshot: "assets/projects/09-vtdown.jpg",
   },
 ];
-
 
 /**
  * Pratinjau project memakai tangkapan layar asli website.

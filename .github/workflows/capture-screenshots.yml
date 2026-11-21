@@ -1,17 +1,17 @@
-name: compare
+name: capture-screenshots
 on:
   workflow_dispatch:
   push:
     branches:
       - arena/c4b58e4f-myverse
     paths:
-      - ".github/workflows/compare.mjs"
+      - ".github/workflows/capture-screenshots.mjs"
 
 permissions:
   contents: write
 
 jobs:
-  compare:
+  capture:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,11 +21,16 @@ jobs:
         with:
           node-version: 22
       - run: npm i -D playwright@1.49.1 && npx playwright install --with-deps chromium
-      - run: node .github/workflows/compare.mjs
-      - name: Commit
+      - run: node .github/workflows/capture-screenshots.mjs
+      - name: Commit screenshots
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f .recon/compare
-          git commit -m "chore: compare captures [skip ci]" || echo "no changes"
-          git push origin HEAD:arena/c4b58e4f-myverse
+          git add -f assets/projects
+          git commit -m "chore: refresh project screenshots [skip ci]" || echo "no changes"
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:arena/c4b58e4f-myverse && break
+            echo "push failed, retry $i"
+            git pull --rebase origin arena/c4b58e4f-myverse || true
+            sleep 5
+          done
